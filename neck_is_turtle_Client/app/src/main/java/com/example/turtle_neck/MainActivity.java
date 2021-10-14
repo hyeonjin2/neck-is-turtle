@@ -13,39 +13,30 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TextView tv_email, tv_pw;
-    private Button btn_back;
-
+    ImageButton btn_stretching;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tv_email = findViewById(R.id.user_Email);
-        tv_pw = findViewById(R.id.user_Password);
+        btn_stretching=findViewById(R.id.btn_stretching);
 
-        btn_back = findViewById(R.id.button);
-
-        Intent intent = getIntent();
-        String userEmail = intent.getStringExtra("userEmail");
-        String userPw = intent.getStringExtra("userPw");
-
-        tv_email.setText(userEmail);
-        tv_pw.setText(userPw);
-
-        btn_back.setOnClickListener(new View.OnClickListener() {
+        btn_stretching.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(MainActivity.this, activity_login.class);
-                startActivity(intent1);
+                Intent intent = new Intent(MainActivity.this,activity_stretching.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                //overridePendingTransition(R.anim.in_right,R.anim.out_left);
             }
         });
+
     }
 }

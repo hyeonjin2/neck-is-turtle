@@ -256,7 +256,7 @@ public class activity_login extends AppCompatActivity {
 
                 String password = edit_pw.getText().toString();
                 if (password.length() >= 8){
-                    pw_condition.setText("8자 이상입니다!");
+                    pw_condition.setText("사용 가능한 비밀번호 입니다!");
                     b_pw = true;
                 }
                 else {
