@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical">
+
+    <!--상단 레이아웃-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#29E1C0"
+        android:elevation="10dp"
+        android:orientation="vertical">
+
+        <!--버튼들-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingEnd="30dp"
+            android:paddingTop="35dp"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <!--알람 버튼-->
+            <ImageButton
+                android:id="@+id/btn_alert"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/image_alert" />
+
+            <!--좋아요 버튼-->
+            <ImageButton
+                android:id="@+id/btn_like"
+                android:layout_width="30dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                android:background="@drawable/heart_fill" />
+
+            <!--환경설정 버튼-->
+            <ImageButton
+                android:id="@+id/btn_setting"
+                android:layout_marginStart="10dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                android:background="@drawable/settings" />
+        </LinearLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="77dp"
+        android:elevation="4dp"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        app:tabTextColor="#000"
+        app:tabTextAppearance="@style/tab_text"
+        app:tabRippleColor="#00000000"
+        app:tabIndicatorHeight="10dp"
+        app:tabIndicatorColor="#BEEBE3">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="스트레칭"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="운동"/>
+
+    </com.google.android.material.tabs.TabLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </FrameLayout>
+    <!--하단 메뉴바-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="13dp"
+                android:layout_weight="1"
+                android:background="@drawable/text_shadow"
+                android:orientation="horizontal">
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    android:background="@drawable/circle_click"/>
+
+                <View
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    android:background="@drawable/circle_click"/>
+                <View
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_weight="1"
+                    android:translationY="-5dp"
+                    android:background="@drawable/test_shadow2"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btn_graph"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="#00000000"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/bar_chart" />
+
+                <ImageButton
+                    android:id="@+id/btn_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="#00000000"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/home" />
+
+                <ImageButton
+                    android:id="@+id/btn_stretching"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="#00000000"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/stretching_exercises" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>
