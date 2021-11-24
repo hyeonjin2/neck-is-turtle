@@ -1,67 +1,140 @@
 package com.example.neck_is_turtle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.ImageView;
 
-import org.w3c.dom.Text;
-
-import java.util.Calendar;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
-    ImageButton btn_stretching,btn_alert,btn_like;
-    TextView tv_today;
-    Calendar calendar;
 
-    String[] days = new String[]{"일요일","월요일","화요일","수요일","목요일","금요일","토요일"};
+    GraphFragment fragment1;
+    HomeFragment fragment2;
+    VideoFragment fragment3;
+    View v1,v2,v3;
+    TabLayout tabs;
+    Boolean clickChange = false;
+
+    private final static String TAG_MAIN = "Main : ";
+
+    ImageButton show_alerts,show_like,btn_setting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn_stretching=findViewById(R.id.btn_stretching);
-        btn_alert = findViewById(R.id.btn_alert);
-        btn_like = findViewById(R.id.btn_like);
-        tv_today = findViewById(R.id.tv_today);
+        v1 = findViewById(R.id.v_graph);
+        v2 = findViewById(R.id.v_home);
+        v3 = findViewById(R.id.v_stretching);
 
-        // calendar에서 가져온 int값 요일로 바꿔 설정하기 -> 1:일요일 ~ 7:토요일
-        calendar = Calendar.getInstance();
-        tv_today.setText(days[calendar.get(calendar.DAY_OF_WEEK)-1]);
+        fragment1 = new GraphFragment();
+        fragment2 = new HomeFragment();
+        fragment3 = new VideoFragment();
 
-        // 하단 메뉴바 스트레칭 클릭 시
-        btn_stretching.setOnClickListener(new View.OnClickListener() {
+        show_alerts = findViewById(R.id.show_alerts);
+        show_like = findViewById(R.id.show_like);
+        btn_setting = findViewById(R.id.btn_setting);
+
+        getSupportFragmentManager().beginTransaction().add(R.id.container, fragment2).commit();
+        tabs = findViewById(R.id.tabs);
+
+        // 두번째 tab인 홈화면이 먼저 보이도록 설정
+        TabLayout.Tab tab = tabs.getTabAt(1);
+        tab.select();
+
+        // tab에 이미지 넣기
+        ImageView img1 = new ImageView(this);
+        img1.setImageResource(R.drawable.bar_chart);
+        img1.setPadding(5,0,0,0);
+        img1.setPadding(50,50,50,50);
+
+        ImageView img2 = new ImageView(this);
+        img2.setImageResource(R.drawable.home);
+        img2.setPadding(50,50,50,50);
+
+        ImageView img3 = new ImageView(this);
+        img3.setImageResource(R.drawable.stretching_exercises);
+        img3.setPadding(0,0,5,0);
+        img3.setPadding(50,50,50,50);
+
+        tabs.getTabAt(0).setCustomView(img1);
+        tabs.getTabAt(1).setCustomView(img2);
+        tabs.getTabAt(2).setCustomView(img3);
+
+        // tab 사용설정
+        tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,activity_tablayout.class);
-                startActivity(intent);
-                overridePendingTransition(0,0);
-                //overridePendingTransition(R.anim.in_right,R.anim.out_left);
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                Fragment selected = null;
+                if(position == 0){
+                    selected = fragment1;
+                    v1.setVisibility(View.VISIBLE);
+                    v2.setVisibility(View.INVISIBLE);
+                    v3.setVisibility(View.INVISIBLE);
+                }
+                else if(position == 1){
+                    selected = fragment2;
+                    v1.setVisibility(View.INVISIBLE);
+                    v2.setVisibility(View.VISIBLE);
+                    v3.setVisibility(View.INVISIBLE);
+                }
+                else if(position == 2){
+                    selected = fragment3;
+                    v1.setVisibility(View.INVISIBLE);
+                    v2.setVisibility(View.INVISIBLE);
+                    v3.setVisibility(View.VISIBLE);
+                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, selected).commit();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
-
-        // 상단 알람 버튼 클릭 시
-        btn_alert.setOnClickListener(new View.OnClickListener() {
+        // 알람보기 버튼 클릭 시
+        show_alerts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent_alert = new Intent(MainActivity.this,activity_alert.class);
-                startActivity(intent_alert);
+                Intent intent_alerts = new Intent(MainActivity.this, AlertActivity.class);
+                startActivity(intent_alerts);
                 overridePendingTransition(0,0);
             }
         });
-
-        // 상단 하트 버튼 클릭 시
-        btn_like.setOnClickListener(new View.OnClickListener() {
+        // 좋아요보기 버튼 클릭 시
+        show_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent_like = new Intent(MainActivity.this,activity_like.class);
+                Intent intent_like = new Intent(MainActivity.this, LikeActivity.class);
                 startActivity(intent_like);
                 overridePendingTransition(0,0);
             }
         });
+        // 추가하러가기 버튼 클릭 리스너 인텐트 받기
+        try {
+            Bundle bundle = getIntent().getExtras();
+            clickChange = bundle.getBoolean("clicked");
+        }catch (Exception ex){
+            clickChange = false;
+            Log.e(TAG_MAIN,"ClickListener Error");
+        }
+        if(clickChange){
+            tab = tabs.getTabAt(2);
+            tab.select();
+            overridePendingTransition(0,0);
+        }
     }
 }

@@ -7,7 +7,7 @@
     android:padding="20dp"
     android:background="#fff"
     android:orientation="vertical"
-    tools:context=".activity_alert">
+    tools:context=".AlertActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

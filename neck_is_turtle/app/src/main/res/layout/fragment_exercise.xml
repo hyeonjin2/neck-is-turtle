@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    tools:context=".fragment_exercise">
+    tools:context=".ExerciseFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <!--운동 부위 버튼들-->

@@ -27,12 +27,12 @@
             <!--알람 버튼-->
             <ImageButton
                 android:id="@+id/btn_alert"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/image_alert" />
+                android:background="@drawable/clock" />
 
             <!--좋아요 버튼-->
             <ImageButton
@@ -60,7 +60,7 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="77dp"
+        android:layout_height="80dp"
         android:elevation="4dp"
         app:tabMode="fixed"
         app:tabGravity="fill"
@@ -83,13 +83,14 @@
     </com.google.android.material.tabs.TabLayout>
     </LinearLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    </FrameLayout>
+    </LinearLayout>
     <!--하단 메뉴바-->
     <LinearLayout
         android:layout_width="match_parent"

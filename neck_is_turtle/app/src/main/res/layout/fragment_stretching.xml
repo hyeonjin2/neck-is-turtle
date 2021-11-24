@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    tools:context=".fragment_stretching">
+    tools:context=".StretchingFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <!--스트레칭 부위 버튼들-->
@@ -30,7 +30,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_selected_background"
                 android:textColor="@drawable/btn_selected_textcolor"
-                android:onClick="mOnClick"
                 android:textSize="16dp"
                 android:text="어깨 통증" />
 
@@ -42,7 +41,6 @@
                 android:layout_marginStart="10dp"
                 android:background="@drawable/btn_selected_background"
                 android:textColor="@drawable/btn_selected_textcolor"
-                android:onClick="mOnClick"
                 android:textSize="16dp"
                 android:text="목 통증" />
 
@@ -54,7 +52,6 @@
                 android:layout_marginStart="10dp"
                 android:background="@drawable/btn_selected_background"
                 android:textColor="@drawable/btn_selected_textcolor"
-                android:onClick="mOnClick"
                 android:textSize="16dp"
                 android:text="누워서" />
 
@@ -66,211 +63,17 @@
                 android:layout_marginStart="10dp"
                 android:background="@drawable/btn_selected_background"
                 android:textColor="@drawable/btn_selected_textcolor"
-                android:onClick="mOnClick"
                 android:textSize="16dp"
                 android:text="앉아서" />
         </LinearLayout>
 
-        <ScrollView
+        <ListView
+            android:id="@+id/listview_video1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:scrollbarThumbVertical="@color/color_scroll"
-            android:layout_marginTop="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="240dp"
-                        android:background="@drawable/rect_video"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/image_thumbnail2"
-                            android:layout_width="match_parent"
-                            android:layout_height="160dp"
-                            tools:srcCompat="@tools:sample/avatars" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_gravity="bottom"
-                            android:background="#EAEDEE" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="80dp"
-                            android:orientation="horizontal"
-                            android:padding="10dp">
-
-                            <ImageView
-                                android:id="@+id/image_profile2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:scaleType="fitXY"
-                                tools:srcCompat="@tools:sample/avatars" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginStart="10dp"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/text_videoName2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Video Name"
-                                    android:textSize="18dp" />
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        android:id="@+id/text_creatorName2"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:text="Creator Name"
-                                        android:textSize="18dp" />
-
-                                    <View
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1" />
-
-
-                                    <ImageButton
-                                        android:id="@+id/btn_videoAlert1"
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
-                                        android:layout_gravity="center"
-                                        android:background="#00000000"
-                                        android:scaleType="fitXY"
-                                        android:src="@drawable/selected_alert" />
-
-                                    <ImageButton
-                                        android:id="@+id/btn_videoLike1"
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:layout_gravity="center"
-                                        android:layout_marginStart="5dp"
-                                        android:layout_marginEnd="3dp"
-                                        android:background="#00000000"
-                                        android:scaleType="fitXY"
-                                        android:src="@drawable/selected_like" />
-                                </LinearLayout>
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="240dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/rect_video"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/image_thumbnail"
-                        android:layout_width="match_parent"
-                        android:layout_height="160dp"
-                        tools:srcCompat="@tools:sample/avatars" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_gravity="bottom"
-                        android:background="#EAEDEE" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
-
-                        <ImageView
-                            android:id="@+id/image_profile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:scaleType="fitXY"
-                            tools:srcCompat="@tools:sample/avatars" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/text_videoName"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Video Name"
-                                android:textSize="18dp" />
-
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/text_creatorName"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:text="Creator Name"
-                                    android:textSize="18dp" />
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1" />
-
-
-                                <ImageButton
-                                    android:id="@+id/btn_videoAlert2"
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:layout_gravity="center"
-                                    android:background="#00000000"
-                                    android:scaleType="fitXY"
-                                    android:src="@drawable/selected_alert" />
-
-                                <ImageButton
-                                    android:id="@+id/btn_videoLike2"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginStart="5dp"
-                                    android:layout_marginEnd="3dp"
-                                    android:background="#00000000"
-                                    android:scaleType="fitXY"
-                                    android:src="@drawable/selected_like" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:dividerHeight="15dp"
+            android:divider="#00000000"
+            android:scrollbarThumbVertical="@color/color_scroll" />
     </LinearLayout>
 </FrameLayout>
