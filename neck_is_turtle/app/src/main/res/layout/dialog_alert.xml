@@ -140,9 +140,6 @@
                     android:spinnersShown="true"
                     android:theme="@style/mTimePicker"
                     android:timePickerMode="spinner" />
-
-
-
             </FrameLayout>
             <TextView
                 android:id="@+id/textView7"

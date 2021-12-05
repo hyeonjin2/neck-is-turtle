@@ -3,10 +3,14 @@ package com.example.neck_is_turtle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -17,18 +21,25 @@ public class MainActivity extends AppCompatActivity {
     GraphFragment fragment1;
     HomeFragment fragment2;
     VideoFragment fragment3;
-    View v1,v2,v3;
-    TabLayout tabs;
-    Boolean clickChange = false;
+    private View v1,v2,v3;
+    private TabLayout tabs;
+    private Boolean clickChange = false;
+    private Dialog hDialog;
+    private Button btn_check;
 
     private final static String TAG_MAIN = "Main : ";
 
-    ImageButton show_alerts,show_like,btn_setting;
+    ImageButton show_alerts,show_like,btn_help;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        hDialog = new Dialog(MainActivity.this);
+        hDialog.setContentView(R.layout.dialog_help);
+
+        btn_check = hDialog.findViewById(R.id.btn_help_check);
 
         v1 = findViewById(R.id.v_graph);
         v2 = findViewById(R.id.v_home);
@@ -40,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         show_alerts = findViewById(R.id.show_alerts);
         show_like = findViewById(R.id.show_like);
-        btn_setting = findViewById(R.id.btn_setting);
+        btn_help = findViewById(R.id.btn_help);
 
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragment2).commit();
         tabs = findViewById(R.id.tabs);
@@ -136,5 +147,18 @@ public class MainActivity extends AppCompatActivity {
             tab.select();
             overridePendingTransition(0,0);
         }
+        btn_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                hDialog.show();
+            }
+        });
+        btn_check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hDialog.dismiss();
+            }
+        });
     }
 }

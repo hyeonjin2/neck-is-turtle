@@ -9,21 +9,10 @@
     android:gravity="center_horizontal"
     android:elevation="4dp"
     android:minWidth="350dp"
-    android:minHeight="330dp"
+    android:minHeight="300dp"
     android:paddingStart="30dp"
     android:paddingTop="10dp"
     android:paddingEnd="20dp">
-
-    <!--뒤로가기 X 버튼-->
-    <Button
-        android:id="@+id/btn_close"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_gravity="end"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/back_path"
-        android:onClick="mOnClick"
-        android:scaleType="fitCenter" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center"
-            android:text="알람이 설정되었습니다!"
+            android:text="알람이 변경되었습니다!"
             android:textColor="#000"
             android:textSize="24sp"/>
 
@@ -48,13 +37,13 @@
             android:background="@drawable/clock"/>
 
         <Button
-            android:id="@+id/see"
+            android:id="@+id/btn_comp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:background="@drawable/rect_login"
             android:textColor="#fff"
-            android:text="보러가기"
+            android:text="확인"
             android:textSize="20sp"/>
     </LinearLayout>
 </LinearLayout>

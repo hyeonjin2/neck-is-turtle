@@ -2,6 +2,7 @@ package com.example.neck_is_turtle;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -31,6 +32,9 @@ public class VideoAdapter extends BaseAdapter implements TimePicker.OnTimeChange
     Calendar calendar;
     int shour,smin;
 
+    private StretchingFragment.AlertItemClickListener alertItemClickListener;
+    private StretchingFragment.LikeItemClickListener likeItemClickListener;
+
     @Override
     public int getCount() {
         return videos.size();
@@ -48,114 +52,56 @@ public class VideoAdapter extends BaseAdapter implements TimePicker.OnTimeChange
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        mViewHolder viewHolder;
         context = parent.getContext();
         VideoData videoData = videos.get(position);
-
-        mDialog = new Dialog(context);
-        mDialog.setContentView(R.layout.dialog_alert);
-
-        sDialog = new Dialog(context);
-        sDialog.setContentView(R.layout.dialog_alert_set_completion);
 
         // 현재 화면에 보여지는 뷰만 만들도록 설정
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.box_video, parent, false);
+            // box_video 아이템들 가져오기
+            viewHolder = new mViewHolder();
+            viewHolder.tv_videoName = convertView.findViewById(R.id.tv_video);
+            viewHolder.tv_creatorName = convertView.findViewById(R.id.tv_creator);
+            viewHolder.thumbnail = convertView.findViewById(R.id.img_video);
+            viewHolder.profile = convertView.findViewById(R.id.img_creator);
+            viewHolder.btn_alert = convertView.findViewById(R.id.btn_alert);
+            viewHolder.btn_like = convertView.findViewById(R.id.btn_like);
+            convertView.setTag(viewHolder);
         }
-        // box_video 아이템들 가져오기
-        ImageView thumbnail = convertView.findViewById(R.id.img_video);
-        ImageView profile = convertView.findViewById(R.id.img_creator);
-        TextView tv_video = convertView.findViewById(R.id.tv_video);
-        TextView tv_creator = convertView.findViewById(R.id.tv_creator);
+        else{
+            viewHolder = (mViewHolder) convertView.getTag();
+        }
 
-        // VideoData에 있는 정보 넣기
-        tv_video.setText(videos.get(position).getVideoName());
-        tv_creator.setText(videos.get(position).getCreatorName());
-        thumbnail.setImageResource(R.drawable.video_example);
-        profile.setImageResource(R.drawable.creator_example);
+        viewHolder.bind(videos.get(position).getVideoName(),videos.get(position).getCreatorName());
 
-        btn_alert = convertView.findViewById(R.id.btn_alert);
-        btn_like = convertView.findViewById(R.id.btn_like);
-
-        // 대화상자 가져오기
-
-        // 대화상자 아이템들 가져오기
-        timePicker = mDialog.findViewById(R.id.timePicker);
-        timePicker.setOnTimeChangedListener(this);
-
-        day_mon = mDialog.findViewById(R.id.day_mon);
-        day_tue = mDialog.findViewById(R.id.day_tue);
-        day_wed = mDialog.findViewById(R.id.day_wed);
-        day_thu = mDialog.findViewById(R.id.day_thu);
-        day_fri = mDialog.findViewById(R.id.day_fri);
-        day_sat = mDialog.findViewById(R.id.day_sat);
-        day_sun = mDialog.findViewById(R.id.day_sun);
-
-        mtv_video = mDialog.findViewById(R.id.tv_video);
-        mtv_creator = mDialog.findViewById(R.id.tv_creator);
-
-        btn_set = mDialog.findViewById(R.id.set);
-        btn_mclose = mDialog.findViewById(R.id.btn_close);
-
-        btn_see = sDialog.findViewById(R.id.see);
-        btn_sclose = sDialog.findViewById(R.id.btn_close);
-
-        // 대화상자 요일버튼 클릭리스너 지정
-        day_mon.setOnClickListener(this.mOnClickListener);
-        day_tue.setOnClickListener(this.mOnClickListener);
-        day_wed.setOnClickListener(this.mOnClickListener);
-        day_thu.setOnClickListener(this.mOnClickListener);
-        day_fri.setOnClickListener(this.mOnClickListener);
-        day_sat.setOnClickListener(this.mOnClickListener);
-        day_sun.setOnClickListener(this.mOnClickListener);
-
-        // 타임피커 초기값 현재시간으로 설정
-        calendar = Calendar.getInstance();
-        shour = calendar.get(calendar.HOUR_OF_DAY);
-        smin = calendar.get(calendar.MINUTE);
-
-        // 알람설정 버튼 눌렀을 때
-        btn_alert.setOnClickListener(new View.OnClickListener() {
+        viewHolder.btn_alert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                mtv_video.setText(videos.get(position).getVideoName());
-                mtv_creator.setText(videos.get(position).getCreatorName());
-                mDialog.show();
+                if(alertItemClickListener!=null){
+                    alertItemClickListener.onAlertItemClick(position);
+                }
+            }
+        });
+        viewHolder.btn_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(likeItemClickListener!=null){
+                    likeItemClickListener.onLikeItemClick(position);
+                }
             }
         });
 
-        // 알람 대화상자 완료버튼 눌렀을 때
-        btn_set.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 서버로 데이터 넘기기
-
-                // 창 닫기
-
-                // 완료상자 띄우기
-
-                // 알람 이미지 selected로 바꾸기
-            }
-        });
-
-        // 알람 대화상자 닫기버튼 눌렀을 때
-        btn_mclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 창 닫기
-                mDialog.cancel();
-            }
-        });
-
-        // 좋아요 기능 구현
-        btn_like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btn_like.setSelected(!btn_like.isSelected());
-            }
-        });
         return convertView;
+    }
+
+    public void setAlertClickListener(StretchingFragment.AlertItemClickListener listener){
+        alertItemClickListener = listener;
+    }
+
+    public void setLikeClickListener(StretchingFragment.LikeItemClickListener listener){
+        likeItemClickListener = listener;
     }
 
     // 아이템 add함수
@@ -169,34 +115,20 @@ public class VideoAdapter extends BaseAdapter implements TimePicker.OnTimeChange
         shour = hourOfDay;
         smin = minute;
     }
-    // 대화상자 요일 버튼들 selected 설정
-    View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.day_mon:
-                    day_mon.setSelected(!day_mon.isSelected());
-                    break;
-                case R.id.day_tue:
-                    day_tue.setSelected(!day_tue.isSelected());
-                    break;
-                case R.id.day_wed:
-                    day_wed.setSelected(!day_wed.isSelected());
-                    break;
-                case R.id.day_thu:
-                    day_thu.setSelected(!day_thu.isSelected());
-                    break;
-                case R.id.day_fri:
-                    day_fri.setSelected(!day_fri.isSelected());
-                    break;
-                case R.id.day_sat:
-                    day_sat.setSelected(!day_sat.isSelected());
-                    break;
-                case R.id.day_sun:
-                    day_sun.setSelected(!day_sun.isSelected());
-                    break;
-            }
+    public static class mViewHolder{
+        TextView tv_videoName,tv_creatorName;
+        ImageView thumbnail,profile;
+        ImageButton btn_alert,btn_like;
+
+        public void bind(String videoName,String creatorName){
+            tv_videoName.setText(videoName);
+            tv_creatorName.setText(creatorName);
+            thumbnail.setImageResource(R.drawable.video_example);
+            profile.setImageResource(R.drawable.creator_example);
         }
-    };
+    }
+    public void clear(){
+        videos.clear();
+    }
 }
 

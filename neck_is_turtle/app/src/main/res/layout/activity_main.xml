@@ -47,14 +47,14 @@
 
             <!--환경설정 버튼-->
             <ImageButton
-                android:id="@+id/btn_setting"
+                android:id="@+id/btn_help"
                 android:layout_marginStart="10dp"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_gravity="center"
-                android:background="@drawable/settings" />
+                android:background="@drawable/help" />
         </LinearLayout>
     </LinearLayout>
         <!--tab 내용 들어갈 레이아웃-->

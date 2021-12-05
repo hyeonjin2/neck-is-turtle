@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -40,6 +43,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
@@ -48,14 +52,17 @@ public class BottomSheetCamera extends BottomSheetDialogFragment implements Call
     private static final String TAG = "BottomSheetCamera";
     //초기변수 설정
     private View view;
-    private Button btn_down,btn_upload,btn_cancel,btn_change;
+    private Button btn_down,btn_upload,btn_cancel;
     // 카메라 프리뷰
     private TextureView mTextureView;
     private PreView mPreview;
-    static final int REQUEST_CAMERA = 1; // 후면 카메라 , 0: 전면 카메라
+    static final int REQUEST_CAMERA = 1;
+    static final int REQUEST_STORAGE = 2;
     // 사진 찍기
     private ImageButton btn_take;
     // 사진 저장하기
+    private Bitmap bitmap;
+    private byte[] bytes;
     MediaScannerConnection mediaScannerConnection = null;
     MediaScannerConnection.MediaScannerConnectionClient mMediaScannerClient = null;
 
@@ -84,28 +91,25 @@ public class BottomSheetCamera extends BottomSheetDialogFragment implements Call
             }
         });
 
-        btn_change = view.findViewById(R.id.btn_change);
-        btn_change.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btn_change.setSelected(!btn_change.isSelected());
-                if(btn_change.isSelected()){
-                    mPreview.setCameraId("1");
-                }
-                else{
-                    mPreview.setCameraId("0");
-                }
-            }
-        });
-
         btn_upload = view.findViewById(R.id.btn_upload);
         btn_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 이미지뷰에 mPreview 캡쳐사진 올리기
+                bitmap = mPreview.getImage();
+                bytes = bitmapToByteArray(bitmap);
 
-                // 서버에 이미지 올리기 parameter(UserKey, Date, Image)
+                GraphFragment graphFragment = new GraphFragment();
 
+                Bundle bundle = new Bundle();
+                bundle.putByteArray("image",bytes);
+                graphFragment.setArguments(bundle);
+                dismiss();
+                Log.e(TAG,"put image bundle");
+
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentGraph,graphFragment);
+                transaction.commit();
             }
         });
 
@@ -115,8 +119,6 @@ public class BottomSheetCamera extends BottomSheetDialogFragment implements Call
             public void onClick(View v) {
                 // 사진찍기
                 mPreview.takePicture();
-                // 찍힌 사진 프리퍼런스에 임시 저장해두기
-                // PreView에서 메소드 구현
             }
         });
 
@@ -157,6 +159,21 @@ public class BottomSheetCamera extends BottomSheetDialogFragment implements Call
                             Log.d(TAG,"mPreview set");
                         } else {
                             Log.e(TAG,"Should have camera permission to run");
+                            dismiss();
+                        }
+                    }
+                }
+                break;
+            case REQUEST_STORAGE:
+                for (int i = 0; i < permissions.length; i++) {
+                    String permission = permissions[i];
+                    int grantResult = grantResults[i];
+                    if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        if (grantResult == PackageManager.PERMISSION_GRANTED) {
+                            Log.d(TAG, "REQUEST_STORAGE");
+                            mPreview.openCamera();
+                        } else {
+                            Log.e(TAG,"Should have external_storage permission to run");
                             dismiss();
                         }
                     }
@@ -209,6 +226,16 @@ public class BottomSheetCamera extends BottomSheetDialogFragment implements Call
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.widthPixels;
     }
+
+    public byte[] bitmapToByteArray( Bitmap bitmap ) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        if (bitmap != null) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        }
+            byte[] byteArray = stream.toByteArray();
+            return byteArray;
+    }
+
 
     @Override
     public void onSave(File filePath) {

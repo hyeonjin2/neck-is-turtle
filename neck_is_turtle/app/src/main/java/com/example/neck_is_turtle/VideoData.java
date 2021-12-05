@@ -1,13 +1,18 @@
 package com.example.neck_is_turtle;
 
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+
 public class VideoData {
     private int id, category;
     private int thumbnailImage;
     private int profileImage;
     private String videoName;
     private String creatorName;
+    private Button btn_alert,btn_like;
 
-    public VideoData(int num,int img1,int img2,String name1,String name2, int num2){
+    public VideoData(int num, int img1, int img2, String name1, String name2, int num2){
         this.id = num;
         this.category = num2;
         this.thumbnailImage = img1;

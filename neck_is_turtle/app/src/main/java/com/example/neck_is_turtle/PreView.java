@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
@@ -26,6 +28,7 @@ import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Surface;
 import android.view.TextureView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -57,6 +60,8 @@ public class PreView extends Thread{
     private CallbackInterface mCallbackInterface;
     private int mWidth;
     private String mCameraId = "0";
+    private Bitmap mBitmap;
+    private byte[] imgByte;
 
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray(4);
 
@@ -101,14 +106,14 @@ public class PreView extends Thread{
             mPreviewSize = map.getOutputSizes(SurfaceTexture.class)[0];
 
             int permissionCamera = ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA);
-            int permissionStorage = ContextCompat.checkSelfPermission(mContext,Manifest.permission.CAMERA);
+            int permissionStorage = ContextCompat.checkSelfPermission(mContext,Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
             if(permissionCamera == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions((Activity) mContext, new String[]{Manifest.permission.CAMERA},
                         BottomSheetCamera.REQUEST_CAMERA);
             } else if (permissionStorage == PackageManager.PERMISSION_DENIED){
                 ActivityCompat.requestPermissions((Activity) mContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        BottomSheetCamera.REQUEST_CAMERA);
+                        BottomSheetCamera.REQUEST_STORAGE);
             }else {
                 manager.openCamera(mCameraId, mStateCallback, null);
             }
@@ -317,6 +322,7 @@ public class PreView extends Thread{
                         byte[] bytes = new byte[buffer.capacity()];
                         buffer.get(bytes);
                         save(bytes);
+                        mBitmap = byteArrayToBitmap(bytes);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -339,6 +345,11 @@ public class PreView extends Thread{
                             output.close();
                         }
                     }
+                }
+                // Byte를 Bitmap으로 변환
+                public Bitmap byteArrayToBitmap(byte[] byteArray ) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray( byteArray, 0, byteArray.length ) ;
+                    return bitmap ;
                 }
             };
 
@@ -377,6 +388,9 @@ public class PreView extends Thread{
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
+    }
+    public Bitmap getImage(){
+        return mBitmap;
     }
     public void setOnCallbackListener(CallbackInterface callbackListener) {
         mCallbackInterface = callbackListener;

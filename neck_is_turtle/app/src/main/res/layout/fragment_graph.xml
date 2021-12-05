@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    android:id="@+id/fragmentGraph"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -82,28 +84,43 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="TextView"
-                    android:textSize="30dp"/>
-
+                    android:textSize="30dp"
+                    android:textColor="#000000"/>
                 <TextView
-                    android:id="@+id/tv_days"
+                    android:id="@+id/tv_day"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="TextView"
-                    android:textSize="24dp"/>
+                    android:textSize="24dp"
+                    android:textColor="#000000"/>
             </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="30dp">
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp">
                 <ImageView
                     android:id="@+id/img_photo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"/>
+                <!--가이드라인-->
+                <View
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:background="@drawable/img_camera"/>
+                    android:background="#80EF5D80"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="160dp"
+                    android:layout_marginStart="33dp"
+                    android:layout_marginEnd="33dp"
+                    android:background="#80EF5D80"/>
             </FrameLayout>
 
         </LinearLayout>

@@ -166,42 +166,53 @@ public class LoginActivity extends AppCompatActivity {
     public void nickCheck() {
         // 사용자가 입력한 닉네임 가져오기
         String nick_name = edit_nickname.getText().toString();
-        if (validate) {
-            return; //검증 완료
-        }
 
         if (nick_name.length() <= 0) {
             Toast.makeText(LoginActivity.this, "닉네임을 입력하세요!", Toast.LENGTH_SHORT).show();
             return;
         }
+        boolean success = (!nick_name.equals("홍길동"));
 
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
+        if (success) {
+            nick_double.setText("사용 가능한 닉네임 입니다!");
+            nick_double.setTextColor(Color.rgb(36, 203, 173)); //#24CBAD
+            b_name_ch = true;
+            edit_nickname.setEnabled(false); //아이디값 고정
+            validate = true; //검증 완료
+        } else {
+            nick_double.setText("이미 존재하는 닉네임 입니다!");
+            nick_double.setTextColor(Color.RED);
+            b_name_ch = false;
+        }
 
-                    JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
-
-                    if (success) {
-                        nick_double.setText("사용할 수 있는 닉네임 입니다!");
-                        nick_double.setTextColor(Color.rgb(36, 203, 173)); //#24CBAD
-                        b_name_ch = true;
-                        edit_nickname.setEnabled(false); //아이디값 고정
-                        validate = true; //검증 완료
-                    } else {
-                        nick_double.setText("이미 존재하는 닉네임 입니다!");
-                        nick_double.setTextColor(Color.RED);
-                        b_name_ch = false;
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        ValidateRequest validateRequest = new ValidateRequest(nick_name, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-        queue.add(validateRequest);
+//        Response.Listener<String> responseListener = new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//
+//                    JSONObject jsonResponse = new JSONObject(response);
+////                    boolean success = jsonResponse.getBoolean("success");
+//                    boolean success = (!nick_name.equals("홍길동"));
+//
+//                    if (success) {
+//                        nick_double.setText("사용할 수 있는 닉네임 입니다!");
+//                        nick_double.setTextColor(Color.rgb(36, 203, 173)); //#24CBAD
+//                        b_name_ch = true;
+//                        edit_nickname.setEnabled(false); //아이디값 고정
+//                        validate = true; //검증 완료
+//                    } else {
+//                        nick_double.setText("이미 존재하는 닉네임 입니다!");
+//                        nick_double.setTextColor(Color.RED);
+//                        b_name_ch = false;
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+//        ValidateRequest validateRequest = new ValidateRequest(nick_name, responseListener);
+//        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+//        queue.add(validateRequest);
     }
 
     public void emailCheck(){
@@ -314,37 +325,39 @@ public class LoginActivity extends AppCompatActivity {
 
         if(b_name&&b_name_ch&&b_email&&b_email_ch&&b_pw&&b_pw_ch) {
 
-            // 서버에 정보 보내기
-            Response.Listener<String> responseListener = new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        boolean success = jsonObject.getBoolean("success");
-                        if(success){    // 회원가입에 성공한 경우
-                            Toast.makeText(LoginActivity.this, "회원가입이 완료되었습니다!"
-                                    , Toast.LENGTH_SHORT).show();
-                            dismissHandler();
-                        }else{  // 회원가입에 실패한 경우
-                            Toast.makeText(LoginActivity.this, "회원가입에 실패하였습니다!"
-                                    , Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }catch (JSONException e){
-                        e.printStackTrace();
-                    }
-                }
-            };
-            // 항목 값 가져오기
-            String userEmail = edit_email.getText().toString();
-            String userPw = edit_pw.getText().toString();
+//            // 서버에 정보 보내기
+//            Response.Listener<String> responseListener = new Response.Listener<String>() {
+//                @Override
+//                public void onResponse(String response) {
+//                    try {
+//                        JSONObject jsonObject = new JSONObject(response);
+//                        boolean success = jsonObject.getBoolean("success");
+//                        if(success){    // 회원가입에 성공한 경우
+//                            Toast.makeText(LoginActivity.this, "회원가입이 완료되었습니다!"
+//                                    , Toast.LENGTH_SHORT).show();
+//                            dismissHandler();
+//                        }else{  // 회원가입에 실패한 경우
+//                            Toast.makeText(LoginActivity.this, "회원가입에 실패하였습니다!"
+//                                    , Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+//                    }catch (JSONException e){
+//                        e.printStackTrace();
+//                    }
+//                }
+//            };
+//            // 항목 값 가져오기
+//            String userEmail = edit_email.getText().toString();
+//            String userPw = edit_pw.getText().toString();
             String userName = edit_nickname.getText().toString();
-
-            // Volley를 이용해서 서버로 요청을 함
-            RegisterRequest registerRequest =
-                    new RegisterRequest(userEmail, userPw, userName,responseListener);
-            RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-            queue.add(registerRequest);
+//
+//            // Volley를 이용해서 서버로 요청을 함
+//            RegisterRequest registerRequest =
+//                    new RegisterRequest(userEmail, userPw, userName,responseListener);
+//            RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+//            queue.add(registerRequest);
+            Toast.makeText(LoginActivity.this, userName+"님 회원가입이 완료되었습니다!", Toast.LENGTH_SHORT).show();
+            mDialog.dismiss();
 
         }else{
             if(!b_name){

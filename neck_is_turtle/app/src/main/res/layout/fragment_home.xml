@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
     <LinearLayout
@@ -49,6 +50,7 @@
             android:layout_height="match_parent"
             android:fillViewport="true"
             android:scrollbarThumbVertical="@color/color_scroll">
+            <!--android:fillViewport="true"-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -149,7 +151,7 @@
                     android:textColor="#07586C"
                     android:textSize="20dp" />
 
-                <!--daily mission들-->
+                <!--daily mission listview-->
                 <ListView
                     android:id="@+id/listview_mission"
                     android:layout_width="match_parent"
@@ -157,6 +159,113 @@
                     android:scrollbars="none"
                     android:dividerHeight="15dp"
                     android:divider="#00000000"/>
+                <!--바른자세 챌린지-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/rect_daily"
+                    android:orientation="vertical"
+                    android:layout_marginTop="15dp"
+                    android:paddingStart="15dp"
+                    android:paddingTop="15dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="#29E1C0"
+                            android:text="바른 자세 챌린지"
+                            android:textSize="18sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="end"
+                            android:orientation="horizontal">
+                            <FrameLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <Button
+                                    android:id="@+id/btn_challengeStart"
+                                    android:layout_width="100dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:background="@drawable/btn_challenge_start"
+                                    android:text="start"
+                                    android:textColor="#FFFFFF"/>
+                                <Button
+                                    android:id="@+id/btn_challengeStop"
+                                    android:layout_width="100dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:background="@drawable/btn_challenge_stop"
+                                    android:visibility="gone"
+                                    android:text="stop"
+                                    android:textColor="#FFFFFF"/>
+                            </FrameLayout>
+                        <ImageButton
+                            android:id="@+id/btn_set_challenge"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_gravity="top"
+                            android:background="#00000000"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/settings" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="5dp"
+                        android:text="바른자세로 핸드폰을 사용해보세요!"
+                        android:textSize="15dp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <SeekBar
+                            android:id="@+id/seekBar"
+                            android:layout_width="280dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:thumb="@drawable/seek_thumb"
+                            android:progressDrawable="@drawable/custom_seekbar_progress"/>
+
+                        <TextView
+                            android:id="@+id/tv_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="-10dp"
+                            android:layout_gravity="center"
+                            android:text="0"
+                            android:textSize="12dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text=" / "
+                            android:textSize="12dp"/>
+
+                        <TextView
+                            android:id="@+id/tv_challengeTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="60"
+                            android:textSize="12dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="분"
+                            android:textSize="12dp"/>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

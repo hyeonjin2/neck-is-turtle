@@ -56,9 +56,9 @@ public class AlertAdapter extends BaseAdapter {
 
         // AlertData에 있는 정보 넣기
         String title = alerts.get(position).getAmpm()+" "+String.valueOf(alerts.get(position).getHour()
-                +":"+String.valueOf(alerts.get(position).getMinute()));
+                +":"+String.valueOf(alerts.get(position).getMinute())+"   "+alerts.get(position).getTitle());
         tv_title.setText(title);
-        tv_details.setText("블라블라");
+        tv_details.setText(alerts.get(position).getDetails());
 
         return convertView;
     }

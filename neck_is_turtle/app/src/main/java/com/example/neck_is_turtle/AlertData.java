@@ -8,6 +8,8 @@ public class AlertData {
     int hour, minute;
     boolean[] days = new boolean[7];
     String ampm;
+    String title;
+    String details;
 
     AlertData(){}
 
@@ -16,6 +18,21 @@ public class AlertData {
         this.hour = num1;
         this.minute = num2;
         this.days = arr;
+        this.title = "Schedule Name";
+        this.details = "Schedule Detals";
+
+        if(num1 >= 12)
+            this.ampm = Pm;
+        else
+            this.ampm = Am;
+    }
+
+    AlertData(int num1, int num2, boolean[] arr, String str1, String str2){
+        this.hour = num1;
+        this.minute = num2;
+        this.days = arr;
+        this.title = str1;
+        this.details = str2;
 
         if(num1 >= 12)
             this.ampm = Pm;
@@ -27,6 +44,8 @@ public class AlertData {
         this.hour = num1;
         this.minute = num2;
         this.days = arr;
+        this.title = "Schedule Name";
+        this.details = "Schedule Detals";
 
         if(num1 >= 12)
             this.ampm = Pm;
@@ -55,4 +74,8 @@ public class AlertData {
     boolean[] getDays(){ return this.days; }
 
     String getAmpm(){ return this.ampm; }
+
+    String getTitle(){ return this.title; }
+
+    String getDetails(){ return this.details; }
 }
